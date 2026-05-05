@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edmond Mei — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #c8f04e;
+      --accent2: #f04e7a;
+      --text: #f0ede8;
+      --muted: #7a7a7a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.1rem;
+      letter-spacing: -0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav a {
+      text-decoration: none; color: var(--muted);
+      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 3rem;
+      padding-top: 8rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+    .hero-blob {
+      position: absolute; top: 10%; right: -10%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,240,78,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+    .hero-tag {
+      display: inline-block;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.3rem 0.9rem; border-radius: 999px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.04em;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 em { font-style: italic; font-weight: 400; color: var(--muted); }
+    .hero-sub {
+      margin-top: 2rem; font-size: 1.1rem; color: var(--muted);
+      max-width: 500px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-cta {
+      margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn {
+      display: inline-block; text-decoration: none;
+      padding: 0.75rem 1.75rem; border-radius: 999px;
+      font-size: 0.9rem; font-weight: 400; letter-spacing: 0.03em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--accent); color: #0e0e0e; font-weight: 700;
+    }
+    .btn-primary:hover { box-shadow: 0 8px 24px rgba(200,240,78,0.3); }
+    .btn-ghost {
+      border: 1px solid var(--border); color: var(--text);
+    }
+    .btn-ghost:hover { border-color: var(--text); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 2rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { border-top: 1px solid var(--border); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: start;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1.05rem; }
+    .about-text p strong { color: var(--text); font-weight: 400; }
+    .skills-list {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem;
+    }
+    .skill-tag {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 0.4rem 1rem; border-radius: 999px;
+      font-size: 0.82rem; color: var(--text);
+      transition: border-color 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--accent); }
+    .about-stats { display: flex; flex-direction: column; gap: 2rem; }
+    .stat-item { border-left: 2px solid var(--accent); padding-left: 1.5rem; }
+    .stat-number {
+      font-family: 'Syne', sans-serif; font-size: 3rem;
+      font-weight: 800; line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
+
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid var(--border); background: var(--surface); }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem; margin-top: 1rem;
+    }
+    .project-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      transition: border-color 0.25s, transform 0.25s;
+      cursor: default;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-tag {
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent2); margin-bottom: 1rem;
+    }
+    .project-card h3 {
+      font-family: 'Syne', sans-serif; font-size: 1.3rem;
+      font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .project-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+    .project-footer {
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+    }
+    .tech-badge {
+      font-size: 0.75rem; padding: 0.25rem 0.7rem;
+      background: var(--surface); border-radius: 4px;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--border); text-align: center; }
+    #contact h2 { margin-bottom: 1rem; }
+    #contact p { color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; }
+    .contact-links {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--muted); font-size: 0.82rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.5rem; }
+      .hero, section { padding: 2rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">EM<span>.</span></div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-grid"></div>
+    <div class="hero-blob"></div>
+    <div class="hero-content">
+      <span class="hero-tag">Available for opportunities</span>
+      <h1>Edmond<br/><em>Mei</em></h1>
+      <p class="hero-sub">
+        Developer & problem solver. I build things for the web and beyond — turning ideas into clean, functional experiences.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View my work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About me</p>
+        <h2>A bit about<br/>who I am</h2>
+        <p>I'm <strong>Edmond Mei</strong>, a developer passionate about creating well-crafted software. I enjoy working across the stack and am always looking to learn new tools and techniques.</p>
+        <p>When I'm not coding, you'll find me exploring new technologies, contributing to open source, or working on side projects that solve real problems.</p>
+        <div class="skills-list">
+          <!-- ✏️ Edit these skills to match yours -->
+          <span class="skill-tag">HTML / CSS</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Kotlin</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Problem Solving</span>
+        </div>
+      </div>
+      <div class="about-stats">
+        <!-- ✏️ Update these numbers -->
+        <div class="stat-item">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Projects completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Years of coding</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Curiosity remaining</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">Selected work</p>
+    <h2>Projects</h2>
+    <div class="projects-grid">
+
+      <!-- ✏️ Replace these with your actual projects -->
+      <div class="project-card">
+        <p class="project-tag">Web App</p>
+        <h3>Project One</h3>
+        <p>A short description of what this project does and the problem it solves. Keep it to 2–3 sentences.</p>
+        <div class="project-footer">
+          <span class="tech-badge">HTML</span>
+          <span class="tech-badge">CSS</span>
+          <span class="tech-badge">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <p class="project-tag">Mobile / CLI</p>
+        <h3>Project Two</h3>
+        <p>Describe what this project does. What did you learn building it? What makes it interesting?</p>
+        <div class="project-footer">
+          <span class="tech-badge">Kotlin</span>
+          <span class="tech-badge">Android</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <p class="project-tag">Open Source</p>
+        <h3>Project Three</h3>
+        <p>Another project you're proud of. Link it to GitHub so visitors can explore the code.</p>
+        <div class="project-footer">
+          <span class="tech-badge">Git</span>
+          <span class="tech-badge">GitHub</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Say hello</p>
+    <h2>Let's connect</h2>
+    <p>Whether it's a job opportunity, a collaboration, or just a chat — my inbox is always open.</p>
+    <div class="contact-links">
+      <!-- ✏️ Replace # with your actual links -->
+      <a href="mailto:your@email.com" class="btn btn-primary">Email me</a>
+      <a href="https://github.com/EdmondMei" target="_blank" class="btn btn-ghost">GitHub</a>
+      <a href="#" target="_blank" class="btn btn-ghost">LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Edmond Mei</span>
+    <span>Built with HTML & CSS · Hosted on GitHub Pages</span>
+  </footer>
+
+</body>
+</html>
